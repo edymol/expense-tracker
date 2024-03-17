@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import xyz.deved.expeapinew.constant.ERole;
 
 import java.util.Set;
 
@@ -33,4 +34,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles;
+
+    public void setRole(ERole eRole) {
+    }
 }

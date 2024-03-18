@@ -4,6 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,14 +17,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import xyz.deved.expeapinew.utility.JwtTokenProvider;
+
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private xyz.deved.expeapinew.security.JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     private UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(xyz.deved.expeapinew.security.JwtTokenProvider jwtTokenProvider, UserDetailsService userDetailsService) {
+    @Autowired
+    public JwtAuthenticationFilter(@Qualifier("jwtTokenProvider") JwtTokenProvider jwtTokenProvider, UserDetailsService userDetailsService) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userDetailsService = userDetailsService;
     }

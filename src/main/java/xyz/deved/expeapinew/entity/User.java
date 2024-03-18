@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import xyz.deved.expeapinew.constant.ERole;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -36,5 +37,10 @@ public class User {
     private Set<Role> roles;
 
     public void setRole(ERole eRole) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(new Role(eRole)); // Assuming Role constructor accepts ERole enum
     }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.deved.expeapinew.constant.ERole;
 import xyz.deved.expeapinew.dto.LoginDto;
 import xyz.deved.expeapinew.dto.UserRegistrationDto;
 import xyz.deved.expeapinew.implementation.AuthServiceImpl;
@@ -22,6 +23,11 @@ public class AuthController {
     // Endpoint for user registration
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserRegistrationDto registrationDto) {
+        // Set default role if not provided in the payload
+        if (registrationDto.getRole() == null) {
+            registrationDto.setRole(String.valueOf(ERole.ROLE_ADMIN.getValue()));
+        }
+
         if (authService.registerUser(registrationDto)) {
             return ResponseEntity.ok("User registered successfully");
         } else {
@@ -29,15 +35,16 @@ public class AuthController {
         }
     }
 
-    // Endpoint for admin registration (secured URL)
     @PostMapping("/register/admin")
     public ResponseEntity<String> registerAdmin(@RequestBody UserRegistrationDto registrationDto) {
+        registrationDto.setRole(String.valueOf(ERole.ROLE_ADMIN.getValue())); // Set the role for admin registration
         if (authService.registerAdmin(registrationDto)) {
             return ResponseEntity.ok("Admin registered successfully");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Admin registration failed");
         }
     }
+
 
     // Endpoint for user login
     @PostMapping("/login")

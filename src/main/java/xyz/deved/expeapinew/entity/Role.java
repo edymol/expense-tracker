@@ -2,20 +2,31 @@ package xyz.deved.expeapinew.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import xyz.deved.expeapinew.constant.ERole;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @Entity
 @Table(name = "roles")
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
+
+    @Column(name = "role_value")
+    private Integer roleValue;
+
+    public Role(ERole role) {
+        this.name = role;
+        this.roleValue = role.getValue();
+    }
 }

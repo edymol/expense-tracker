@@ -12,7 +12,7 @@ import xyz.deved.expeapinew.dto.LoginDto;
 import xyz.deved.expeapinew.dto.UserRegistrationDto;
 import xyz.deved.expeapinew.entity.User;
 import xyz.deved.expeapinew.repository.UserRepository;
-import xyz.deved.expeapinew.security.JwtTokenProvider;
+import xyz.deved.expeapinew.utility.JwtTokenProvider;
 
 @Service
 public class AuthServiceImpl {
